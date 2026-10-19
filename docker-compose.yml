@@ -1,0 +1,69 @@
+# WAF F-Hacker 2026 để các đội tải về tập trước: cùng image BunkerWeb với lúc thi
+# (giao diện, plugin Traffic log, seed của BTC), nhưng phía sau là app echo trả lại
+# request, không phải app thi.
+#
+#   make up        dựng + seed (lần đầu ~1-2 phút)
+#   app qua WAF    http://localhost:${BW_PORT:-8000}/
+#   WAF UI         http://localhost:${BW_UI_PORT:-8005}/
+name: fhacker-waf-practice
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: bunkerweb
+      POSTGRES_USER: bunkerweb
+      POSTGRES_PASSWORD: ${WAF_DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks: [waf_db]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bunkerweb -d bunkerweb"]
+      interval: 3s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  # App giả: trả lại method, URL, header và body dưới dạng JSON. Gửi chuỗi FHACKER{...}
+  # trong body là thấy nó xuất hiện trong response, đủ để thử rule phase 4 (RESPONSE_BODY).
+  # Alias fuap_edge để .env giống lúc thi (REVERSE_PROXY_HOST=http://fuap_edge:80).
+  app:
+    image: mendhak/http-https-echo:37
+    environment:
+      HTTP_PORT: 80
+    networks:
+      waf_edge:
+        aliases: [fuap_edge]
+    restart: unless-stopped
+
+  fuap_bunkerweb:
+    image: ghcr.io/f-hacker-macos/custom_waf26:${TAG:-latest}
+    # Image chỉ có bản amd64; máy Apple Silicon chạy qua giả lập.
+    platform: linux/amd64
+    depends_on:
+      app: { condition: service_started }
+      postgres: { condition: service_healthy }
+    ports:
+      - "127.0.0.1:${BW_PORT:-8000}:8080"
+      - "127.0.0.1:${BW_UI_PORT:-8005}:7000"
+    volumes:
+      # traffic.log, modsec_audit.log và bản rotate sống qua lần tạo lại container.
+      - waf_logs:/var/log/bunkerweb
+    env_file: [.env]
+    environment:
+      DATABASE_URI: postgresql://bunkerweb:${WAF_DB_PASSWORD}@postgres:5432/bunkerweb
+    networks: [waf_edge, waf_db]
+    mem_limit: 3g
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  waf_logs:
+
+networks:
+  waf_edge:
+    driver: bridge
+  waf_db:
+    driver: bridge
+    internal: true
