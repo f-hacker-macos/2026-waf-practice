@@ -1,6 +1,6 @@
 # Custom config và test WAF
 
-Tài liệu kỹ thuật cho bản tập `custom_waf26:1.0.0` (BunkerWeb 1.6.16, ModSecurity v3, OWASP CRS v4).
+Tài liệu kỹ thuật cho bản tập `custom_waf26:latest` (BunkerWeb 1.6.16, ModSecurity v3, OWASP CRS v4).
 Tham chiếu đầy đủ: [docs.bunkerweb.io/1.6.16](https://docs.bunkerweb.io/1.6.16/).
 
 UI mặc định tiếng Việt. Tài liệu dùng tên menu tiếng Anh; đổi ngôn ngữ ở thanh trên nếu cần.

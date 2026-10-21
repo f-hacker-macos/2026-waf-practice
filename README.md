@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/bunkerity/bunkerweb/releases/tag/v1.6.16"><img src="https://img.shields.io/badge/BunkerWeb-1.6.16-2ea043" alt="BunkerWeb 1.6.16"></a>
-  <a href="https://github.com/f-hacker-macos/2026-waf-practice/pkgs/container/custom_waf26"><img src="https://img.shields.io/badge/image-custom__waf26%3A1.0.0-0d5eaf?logo=docker&logoColor=white" alt="custom_waf26:1.0.0"></a>
+  <a href="https://github.com/f-hacker-macos/2026-waf-practice/pkgs/container/custom_waf26"><img src="https://img.shields.io/badge/image-custom__waf26%3Alatest-0d5eaf?logo=docker&logoColor=white" alt="custom_waf26:latest"></a>
   <img src="https://img.shields.io/badge/platform-linux%2Famd64-555" alt="linux/amd64">
   <a href="https://docs.bunkerweb.io/1.6.16/"><img src="https://img.shields.io/badge/docs-1.6.16-f26f21" alt="Docs 1.6.16"></a>
 </p>
@@ -24,7 +24,7 @@ Phía sau WAF là một app echo trả lại request của bạn, không phải 
 
 | | |
 |---|---|
-| Image | [`ghcr.io/f-hacker-macos/custom_waf26:1.0.0`](https://github.com/f-hacker-macos/2026-waf-practice/pkgs/container/custom_waf26) (`linux/amd64`) |
+| Image | [`ghcr.io/f-hacker-macos/custom_waf26:latest`](https://github.com/f-hacker-macos/2026-waf-practice/pkgs/container/custom_waf26) (`linux/amd64`) |
 | Dựng trên | [`bunkerity/bunkerweb-all-in-one:1.6.16`](https://hub.docker.com/r/bunkerity/bunkerweb-all-in-one) · [release v1.6.16](https://github.com/bunkerity/bunkerweb/releases/tag/v1.6.16) |
 | Tài liệu gốc | [Tổng quan](https://docs.bunkerweb.io/1.6.16/) · [Web UI](https://docs.bunkerweb.io/1.6.16/web-ui/) · [ModSecurity](https://docs.bunkerweb.io/1.6.16/features/#modsecurity) · [Custom configurations](https://docs.bunkerweb.io/1.6.16/advanced/#custom-configurations) · [Plugins](https://docs.bunkerweb.io/1.6.16/plugins/) |
 
